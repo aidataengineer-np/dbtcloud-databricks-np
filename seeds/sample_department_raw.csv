@@ -1,0 +1,4 @@
+department_id,department_name,business_unit,updated_at,ingestion_ts
+d10,people analytics,hr,2026-05-01 09:00:00,2026-05-01 09:05:00
+d20,data engineering,technology,2026-05-01 09:10:00,2026-05-01 09:15:00
+d30,finance operations,finance,2026-05-01 09:20:00,2026-05-01 09:25:00

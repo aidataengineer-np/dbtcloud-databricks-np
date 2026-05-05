@@ -1,0 +1,30 @@
+rule_id,rule_set_name,target_model,target_column,rule_sql,rule_order,is_active,effective_start_date,effective_end_date,rule_description
+1,hr_standardization_v1,silver_employee,employee_id,cast(__SRC__.employee_id as bigint),10,true,2026-01-01,,Cast employee id
+2,hr_standardization_v1,silver_employee,employee_name,"concat(initcap(trim(__SRC__.first_name)), ' ', initcap(trim(__SRC__.last_name)))",20,true,2026-01-01,,Standardize full employee name
+3,hr_standardization_v1,silver_employee,gender,"case when upper(trim(__SRC__.gender)) in ('M','MALE') then 'Male' when upper(trim(__SRC__.gender)) in ('F','FEMALE') then 'Female' else 'Unknown' end",30,true,2026-01-01,,Standardize gender values
+4,hr_standardization_v1,silver_employee,email,lower(trim(__SRC__.email)),40,true,2026-01-01,,Standardize email
+5,hr_standardization_v1,silver_employee,department_id,upper(trim(__SRC__.department_id)),50,true,2026-01-01,,Standardize department id
+6,hr_standardization_v1,silver_employee,job_id,upper(trim(__SRC__.job_id)),60,true,2026-01-01,,Standardize job id
+7,hr_standardization_v1,silver_employee,hire_date,to_date(__SRC__.hire_date),70,true,2026-01-01,,Cast hire date
+8,hr_standardization_v1,silver_employee,employment_status,case when upper(trim(__SRC__.employment_status)) = 'A' then 'Active' when upper(trim(__SRC__.employment_status)) = 'I' then 'Inactive' when upper(trim(__SRC__.employment_status)) = 'T' then 'Terminated' else 'Unknown' end,80,true,2026-01-01,,Standardize employment status
+9,hr_standardization_v1,silver_employee,salary,"cast(coalesce(__SRC__.salary, 0) as decimal(18,2))",90,true,2026-01-01,,Default salary to zero if missing
+10,hr_standardization_v1,silver_employee,source_updated_at,cast(__SRC__.updated_at as timestamp),100,true,2026-01-01,,Source update timestamp
+11,hr_standardization_v1,silver_department,department_id,upper(trim(__SRC__.department_id)),10,true,2026-01-01,,Department id
+12,hr_standardization_v1,silver_department,department_name,initcap(trim(__SRC__.department_name)),20,true,2026-01-01,,Department name
+13,hr_standardization_v1,silver_department,business_unit,upper(trim(__SRC__.business_unit)),30,true,2026-01-01,,Business unit
+14,hr_standardization_v1,silver_department,source_updated_at,cast(__SRC__.updated_at as timestamp),40,true,2026-01-01,,Department updated timestamp
+15,hr_standardization_v1,silver_job,job_id,upper(trim(__SRC__.job_id)),10,true,2026-01-01,,Job id
+16,hr_standardization_v1,silver_job,job_title,initcap(trim(__SRC__.job_title)),20,true,2026-01-01,,Job title
+17,hr_standardization_v1,silver_job,job_family,initcap(trim(__SRC__.job_family)),30,true,2026-01-01,,Job family
+18,hr_standardization_v1,silver_job,min_salary,"cast(__SRC__.min_salary as decimal(18,2))",40,true,2026-01-01,,Minimum salary
+19,hr_standardization_v1,silver_job,max_salary,"cast(__SRC__.max_salary as decimal(18,2))",50,true,2026-01-01,,Maximum salary
+20,hr_standardization_v1,silver_job,source_updated_at,cast(__SRC__.updated_at as timestamp),60,true,2026-01-01,,Job updated timestamp
+21,hr_standardization_v1,silver_payroll,payroll_id,cast(__SRC__.payroll_id as bigint),10,true,2026-01-01,,Payroll id
+22,hr_standardization_v1,silver_payroll,employee_id,cast(__SRC__.employee_id as bigint),20,true,2026-01-01,,Employee id
+23,hr_standardization_v1,silver_payroll,pay_period_start,to_date(__SRC__.pay_period_start),30,true,2026-01-01,,Pay period start
+24,hr_standardization_v1,silver_payroll,pay_period_end,to_date(__SRC__.pay_period_end),40,true,2026-01-01,,Pay period end
+25,hr_standardization_v1,silver_payroll,gross_pay,"cast(coalesce(__SRC__.gross_pay, 0) as decimal(18,2))",50,true,2026-01-01,,Gross pay
+26,hr_standardization_v1,silver_payroll,bonus,"cast(coalesce(__SRC__.bonus, 0) as decimal(18,2))",60,true,2026-01-01,,Bonus
+27,hr_standardization_v1,silver_payroll,tax,"cast(coalesce(__SRC__.tax, 0) as decimal(18,2))",70,true,2026-01-01,,Tax
+28,hr_standardization_v1,silver_payroll,net_pay,"cast(coalesce(__SRC__.net_pay, 0) as decimal(18,2))",80,true,2026-01-01,,Net pay
+29,hr_standardization_v1,silver_payroll,source_updated_at,cast(__SRC__.updated_at as timestamp),90,true,2026-01-01,,Payroll updated timestamp

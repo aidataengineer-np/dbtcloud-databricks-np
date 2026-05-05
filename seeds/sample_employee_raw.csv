@@ -1,0 +1,6 @@
+employee_id,first_name,last_name,gender,email,department_id,job_id,hire_date,employment_status,salary,updated_at,ingestion_ts
+1,john,doe,M,JOHN.DOE@EXAMPLE.COM,d10,j100,2021-01-15,A,95000.00,2026-05-01 10:00:00,2026-05-01 10:10:00
+2,priya,patel,F,PRIYA.PATEL@EXAMPLE.COM,d20,j200,2020-03-01,A,125000.00,2026-05-01 11:00:00,2026-05-01 11:10:00
+2,priya,patel,Female,priya.patel@example.com,D20,J250,2020-03-01,A,132000.00,2026-05-03 09:00:00,2026-05-03 09:05:00
+3,carlos,rivera,Male,CARLOS.RIVERA@EXAMPLE.COM,d10,j100,2022-07-18,I,88000.00,2026-05-02 08:00:00,2026-05-02 08:05:00
+4,amy,chen,F,amy.chen@example.com,d30,j300,2023-11-20,A,78000.00,2026-05-04 12:30:00,2026-05-04 12:35:00

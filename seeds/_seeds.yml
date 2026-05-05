@@ -1,0 +1,57 @@
+version: 2
+
+seeds:
+  - name: sample_employee_raw
+    description: Sample Workday-style employee raw data. Demo only; do not use seeds for large/sensitive production raw data.
+    columns:
+      - name: employee_id
+        description: Natural employee identifier from source system.
+        data_tests:
+          - not_null
+      - name: ingestion_ts
+        description: Time the raw record landed in bronze.
+
+  - name: sample_department_raw
+    description: Sample Workday department raw data.
+    columns:
+      - name: department_id
+        data_tests:
+          - not_null
+
+  - name: sample_job_raw
+    description: Sample Workday job raw data.
+    columns:
+      - name: job_id
+        data_tests:
+          - not_null
+
+  - name: sample_payroll_raw
+    description: Sample Dayforce payroll raw data.
+    columns:
+      - name: payroll_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: transformation_rules
+    description: Metadata-driven transformation rules. In production this should be a governed UC Delta table in config schema.
+    columns:
+      - name: rule_id
+        data_tests:
+          - unique
+          - not_null
+      - name: rule_set_name
+        data_tests:
+          - not_null
+      - name: target_model
+        data_tests:
+          - not_null
+      - name: target_column
+        data_tests:
+          - not_null
+      - name: rule_sql
+        data_tests:
+          - not_null
+      - name: is_active
+        data_tests:
+          - not_null

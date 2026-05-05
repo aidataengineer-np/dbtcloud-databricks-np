@@ -1,0 +1,51 @@
+version: 2
+
+sources:
+  - name: bronze_hr
+    description: Source-aligned HR bronze tables in Unity Catalog.
+    database: "{{ target.catalog | default(target.database, true) }}"
+    schema: bronze
+    tables:
+      - name: employee_raw
+        description: Raw Workday employee data.
+        loaded_at_field: ingestion_ts
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 72, period: hour}
+        columns:
+          - name: employee_id
+            data_tests:
+              - not_null
+
+      - name: department_raw
+        description: Raw Workday department data.
+        loaded_at_field: ingestion_ts
+        columns:
+          - name: department_id
+            data_tests:
+              - not_null
+
+      - name: job_raw
+        description: Raw Workday job data.
+        loaded_at_field: ingestion_ts
+        columns:
+          - name: job_id
+            data_tests:
+              - not_null
+
+      - name: payroll_raw
+        description: Raw Dayforce payroll data.
+        loaded_at_field: ingestion_ts
+        columns:
+          - name: payroll_id
+            data_tests:
+              - not_null
+              - unique
+
+  - name: config
+    description: Governed configuration and transformation rules in Unity Catalog.
+    database: "{{ target.catalog | default(target.database, true) }}"
+    schema: config
+    tables:
+      - name: transformation_rules
+        description: Active and historical transformation rule definitions.

@@ -1,0 +1,5 @@
+job_id,job_title,job_family,min_salary,max_salary,updated_at,ingestion_ts
+j100,HR Data Analyst,Analytics,70000.00,110000.00,2026-05-01 09:00:00,2026-05-01 09:05:00
+j200,Senior Data Engineer,Engineering,110000.00,150000.00,2026-05-01 09:00:00,2026-05-01 09:05:00
+j250,Lead Data Engineer,Engineering,130000.00,175000.00,2026-05-03 09:00:00,2026-05-03 09:05:00
+j300,Finance Analyst,Finance,65000.00,95000.00,2026-05-01 09:00:00,2026-05-01 09:05:00

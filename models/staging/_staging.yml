@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_workday_employee
+    description: Source-aligned Workday employee staging view with basic data type casting.
+    columns:
+      - name: employee_id
+        data_tests:
+          - not_null
+      - name: updated_at
+        data_tests:
+          - not_null
+
+  - name: stg_workday_department
+    description: Source-aligned Workday department staging view.
+    columns:
+      - name: department_id
+        data_tests:
+          - not_null
+
+  - name: stg_workday_job
+    description: Source-aligned Workday job staging view.
+    columns:
+      - name: job_id
+        data_tests:
+          - not_null
+
+  - name: stg_dayforce_payroll
+    description: Source-aligned Dayforce payroll staging view.
+    columns:
+      - name: payroll_id
+        data_tests:
+          - unique
+          - not_null

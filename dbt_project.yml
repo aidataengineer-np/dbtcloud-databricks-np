@@ -1,0 +1,108 @@
+name: hr_analytics_dbt
+version: '1.0.0'
+config-version: 2
+
+profile: hr_analytics_dbt
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - target
+  - dbt_packages
+  - logs
+
+vars:
+  rule_set_name: hr_standardization_v1
+  rules_effective_date: '2026-05-05'
+
+models:
+  hr_analytics_dbt:
+    +file_format: delta
+    +persist_docs:
+      relation: true
+      columns: true
+
+    staging:
+      +schema: silver
+      +materialized: view
+      +tags: ["staging", "silver", "view"]
+
+    silver:
+      +schema: silver
+      +materialized: incremental
+      +incremental_strategy: merge
+      +on_schema_change: sync_all_columns
+      +file_format: delta
+      +tblproperties:
+        delta.enableChangeDataFeed: 'true'
+      +tags: ["silver", "incremental", "delta"]
+
+    gold:
+      +schema: gold
+      +materialized: table
+      +file_format: delta
+      +tags: ["gold", "mart", "delta"]
+
+seeds:
+  hr_analytics_dbt:
+    +file_format: delta
+    +quote_columns: false
+
+    sample_employee_raw:
+      +schema: bronze
+      +alias: employee_raw
+      +column_types:
+        employee_id: bigint
+        salary: decimal(18,2)
+        updated_at: timestamp
+        ingestion_ts: timestamp
+
+    sample_department_raw:
+      +schema: bronze
+      +alias: department_raw
+      +column_types:
+        updated_at: timestamp
+        ingestion_ts: timestamp
+
+    sample_job_raw:
+      +schema: bronze
+      +alias: job_raw
+      +column_types:
+        min_salary: decimal(18,2)
+        max_salary: decimal(18,2)
+        updated_at: timestamp
+        ingestion_ts: timestamp
+
+    sample_payroll_raw:
+      +schema: bronze
+      +alias: payroll_raw
+      +column_types:
+        payroll_id: bigint
+        employee_id: bigint
+        gross_pay: decimal(18,2)
+        bonus: decimal(18,2)
+        tax: decimal(18,2)
+        net_pay: decimal(18,2)
+        updated_at: timestamp
+        ingestion_ts: timestamp
+
+    transformation_rules:
+      +schema: config
+      +alias: transformation_rules
+      +column_types:
+        rule_id: bigint
+        rule_order: int
+        is_active: boolean
+        effective_start_date: date
+        effective_end_date: date
+
+snapshots:
+  hr_analytics_dbt:
+    +target_schema: snapshots
+    +strategy: timestamp
+    +updated_at: source_updated_at

@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: dim_employee
+    description: Gold employee dimension enriched with department and job attributes.
+    columns:
+      - name: employee_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: employee_id
+        data_tests:
+          - unique
+          - not_null
+      - name: department_id
+        data_tests:
+          - not_null
+
+  - name: dim_department
+    description: Gold department dimension.
+    columns:
+      - name: department_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: department_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fact_payroll
+    description: Gold payroll fact table joined to employee, department, and job keys.
+    columns:
+      - name: payroll_id
+        data_tests:
+          - unique
+          - not_null
+      - name: employee_sk
+        data_tests:
+          - not_null
+      - name: net_pay
+        data_tests:
+          - is_non_negative
+
+  - name: mart_hr_headcount_summary
+    description: HR summary mart for BI dashboards and executive reporting.
+    columns:
+      - name: employee_count
+        data_tests:
+          - is_non_negative

@@ -1,0 +1,16 @@
+version: 2
+
+exposures:
+  - name: hr_executive_dashboard
+    label: HR Executive Dashboard
+    type: dashboard
+    maturity: medium
+    url: https://example.com/powerbi/hr-executive-dashboard
+    description: Executive dashboard for headcount, payroll, salary, and attrition-style HR KPIs.
+    depends_on:
+      - ref('mart_hr_headcount_summary')
+      - ref('fact_payroll')
+      - ref('dim_employee')
+    owner:
+      name: HR Analytics Team
+      email: hr-analytics@example.com

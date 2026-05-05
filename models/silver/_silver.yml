@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: silver_employee
+    description: Cleaned, conformed employee entity generated from Workday staging and dynamic transformation rules.
+    columns:
+      - name: employee_sk
+        description: SHA-256 surrogate key generated from employee_id.
+        data_tests:
+          - unique
+          - not_null
+      - name: employee_id
+        data_tests:
+          - unique
+          - not_null
+      - name: gender
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Male', 'Female', 'Unknown']
+      - name: email
+        data_tests:
+          - valid_email_format
+      - name: department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('silver_department')
+                field: department_id
+      - name: employment_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Active', 'Inactive', 'Terminated', 'Unknown']
+      - name: salary
+        data_tests:
+          - is_non_negative
+
+  - name: silver_department
+    description: Cleaned and conformed department entity.
+    columns:
+      - name: department_id
+        data_tests:
+          - unique
+          - not_null
+      - name: business_unit
+        data_tests:
+          - not_null
+
+  - name: silver_job
+    description: Cleaned and conformed job entity.
+    columns:
+      - name: job_id
+        data_tests:
+          - unique
+          - not_null
+      - name: min_salary
+        data_tests:
+          - is_non_negative
+      - name: max_salary
+        data_tests:
+          - is_non_negative
+
+  - name: silver_payroll
+    description: Cleaned and conformed payroll fact-like entity from Dayforce.
+    columns:
+      - name: payroll_id
+        data_tests:
+          - unique
+          - not_null
+      - name: employee_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('silver_employee')
+                field: employee_id
+      - name: gross_pay
+        data_tests:
+          - is_non_negative
+      - name: net_pay
+        data_tests:
+          - is_non_negative
